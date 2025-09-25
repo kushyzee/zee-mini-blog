@@ -49,7 +49,7 @@ export default defineConfig([
     extends: fixupConfigRules(
       compat.extends(
         "plugin:react/recommended",
-        "plugin:prettier/recommended",
+        // "plugin:prettier/recommended",
         "plugin:react-hooks/recommended",
         "plugin:jsx-a11y/recommended"
       )
@@ -61,7 +61,7 @@ export default defineConfig([
       import: fixupPluginRules(_import),
       "@typescript-eslint": typescriptEslint,
       "jsx-a11y": fixupPluginRules(jsxA11Y),
-      prettier: fixupPluginRules(prettier),
+      // prettier: fixupPluginRules(prettier),
     },
 
     languageOptions: {
