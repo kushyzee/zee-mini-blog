@@ -1,6 +1,7 @@
 import { Button } from "@heroui/button";
 import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
 import { Divider } from "@heroui/divider";
+import { Spinner } from "@heroui/react";
 import { Calendar, Edit, Eye, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -15,23 +16,27 @@ const baseUrl = "https://jsonplaceholder.typicode.com/posts";
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch(`${baseUrl}?_limit=6`);
-      const data = await response.json();
+      setIsLoading(true);
+      try {
+        const response = await fetch(`${baseUrl}?_limit=6`);
+        const data = await response.json();
 
-      setPosts(data);
+        setPosts(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchPosts();
   }, []);
 
-  const getExcerpt = (
-    content: string,
-    type: string = "body",
-    length: number
-  ) => {
+  const getExcerpt = (content: string, type: string, length: number) => {
     let newContent = "";
 
     if (content.length > length) {
@@ -46,6 +51,14 @@ export default function Home() {
 
     return content;
   };
+
+  if (isLoading) {
+    return (
+      <div className="pt-32 max-w-4xl mx-auto p-4 flex items-center justify-center">
+        <Spinner label="loading..." size="lg" />
+      </div>
+    );
+  }
 
   return (
     <div className="pt-32 max-w-4xl mx-auto p-4">

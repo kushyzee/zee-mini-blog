@@ -1,9 +1,13 @@
 import { BookOpen, Plus } from "lucide-react";
 import { Button } from "@heroui/react";
 
-export default function Header() {
+export default function Header({
+  updateRouteHandler,
+}: {
+  updateRouteHandler: (newRoute: string) => void;
+}) {
   return (
-    <header className="py-5 px-4 shadow-md fixed top-0 left-0 right-0 bg-transparent backdrop-blur-lg z-50">
+    <header className="py-5 px-4 shadow-md fixed top-0 left-0 right-0 bg-transparent backdrop-blur-xl z-30">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <div className="flex items-center gap-2">
           <div className="bg-gradient-to-bl from-blue-600 to-indigo-500 rounded-xl p-2">
@@ -18,6 +22,7 @@ export default function Header() {
           color="primary"
           radius="md"
           startContent={<Plus />}
+          onClick={() => updateRouteHandler("new-post")}
         >
           New Post
         </Button>
