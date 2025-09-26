@@ -1,0 +1,107 @@
+import { Button } from "@heroui/button";
+import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
+import { Divider } from "@heroui/divider";
+import { Calendar, Edit, Eye, Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
+
+interface Post {
+  id: number;
+  title: string;
+  body: string;
+  userId: number;
+}
+
+const baseUrl = "https://jsonplaceholder.typicode.com/posts";
+
+export default function Home() {
+  const [posts, setPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await fetch(`${baseUrl}?_limit=6`);
+      const data = await response.json();
+
+      setPosts(data);
+    };
+
+    fetchPosts();
+  }, []);
+
+  const getExcerpt = (
+    content: string,
+    type: string = "body",
+    length: number
+  ) => {
+    let newContent = "";
+
+    if (content.length > length) {
+      newContent = content.slice(0, length);
+
+      if (type === "body") {
+        return newContent + "...";
+      } else if (type === "title") {
+        return newContent;
+      }
+    }
+
+    return content;
+  };
+
+  return (
+    <div className="pt-32 max-w-4xl mx-auto p-4">
+      {/* Hero section */}
+      <div className="text-center">
+        <h1 className="text-4xl font-bold mb-4 text-gray-800">
+          Welcome to Mini Blog
+        </h1>
+        <p className="text-xl">
+          Discover amazing stories, insights, and ideas from our community of
+          writers.
+        </p>
+      </div>
+
+      {/* Posts section */}
+      <section className="mt-8 flex flex-col gap-4">
+        {posts.map((post) => (
+          <Card key={post.id} className="text-gray-600 p-4">
+            <CardHeader>
+              <div>
+                <h1 className="text-xl text-gray-800 mb-2 font-semibold">
+                  {getExcerpt(post.title, "title", 40)}
+                </h1>
+                <div className="flex gap-1 items-center text-sm">
+                  <Calendar className="size-4" />
+                  <p>Jan 15, 2024</p>
+                </div>
+              </div>
+            </CardHeader>
+            <CardBody>
+              <p>{getExcerpt(post.body, "body", 100)}</p>
+            </CardBody>
+            <Divider />
+            <CardFooter className="flex items-center justify-between">
+              <Button
+                className="text-primary flex items-center gap-1.5 p-0"
+                startContent={<Eye className="size-5" />}
+                variant="light"
+              >
+                <p>Read More</p>
+              </Button>
+              <div className="flex gap-1">
+                <Button
+                  className="bg-gray-100"
+                  startContent={<Edit className="size-5" />}
+                >
+                  Edit
+                </Button>
+                <Button isIconOnly className="text-red-600" variant="light">
+                  <Trash2 className="size-5" />
+                </Button>
+              </div>
+            </CardFooter>
+          </Card>
+        ))}
+      </section>
+    </div>
+  );
+}
