@@ -12,11 +12,11 @@ function App() {
   };
 
   return (
-    <div className="text-gray-600 min-h-screen bg-gray-100">
+    <div className=" min-h-screen bg-gray-100">
       <Header updateRouteHandler={updateRoute} />
       <main>
         {route === "home" && <Home />}
-        {route === "new-post" && <NewPost />}
+        {route === "new-post" && <NewPost updateRouteHandler={updateRoute} />}
         {/* Future routes can be added here */}
       </main>
     </div>

@@ -22,7 +22,7 @@ export default function Header({
           color="primary"
           radius="md"
           startContent={<Plus />}
-          onClick={() => updateRouteHandler("new-post")}
+          onPress={() => updateRouteHandler("new-post")}
         >
           New Post
         </Button>
