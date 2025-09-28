@@ -15,10 +15,30 @@ interface Post {
 
 export default function NewPost({ updateRouteHandler }: NewPostProps) {
   const [post, setPost] = useState<Post | {}>({});
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
+  // Validation handler
+  const validationHandler = (
+    value: string,
+    type: "Title" | "Content",
+    length: number
+  ) => {
+    if (!value.trim()) {
+      return `${type} is required`;
+    }
+    if (value.trim().length < length) {
+      return `${type} must be at least ${length} characters long`;
+    }
+
+    return null;
+  };
 
   // Form submit handler
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
+
+    // Get form data
     const formData = new FormData(e.currentTarget);
     const title = formData.get("title") as string;
     const content = formData.get("content") as string;
@@ -35,28 +55,42 @@ export default function NewPost({ updateRouteHandler }: NewPostProps) {
       title,
       content,
     });
+
+    sendPost();
   };
 
-  console.log("post Submitted:", post);
+  // Send post to API
+  const sendPost = async () => {
+    try {
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/posts",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(post),
+        }
+      );
 
-  const validationHandler = (
-    value: string,
-    type: "Title" | "Content",
-    length: number
-  ) => {
-    if (!value.trim()) {
-      return `${type} is required`;
-    }
-    if (value.trim().length < length) {
-      return `${type} must be at least ${length} characters long`;
-    }
+      if (response.ok) {
+        const data = await response.json();
 
-    return null;
+        console.log(data);
+      } else {
+        console.log("response not ok");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsSubmitting(false);
+      updateRouteHandler("home");
+    }
   };
 
   useEffect(() => {
-    const sendPost = () => {};
-  }, [post]);
+    document.title = "Create New Post - Mini Blog";
+  }, []);
 
   return (
     <div className="pt-32 max-w-4xl mx-auto p-4">
@@ -72,7 +106,6 @@ export default function NewPost({ updateRouteHandler }: NewPostProps) {
                 isRequired
                 label="Post Title"
                 labelPlacement="outside-top"
-                minLength={5}
                 name="title"
                 placeholder="Enter an engaging title..."
                 validate={(value) => validationHandler(value, "Title", 5)}
@@ -94,6 +127,8 @@ export default function NewPost({ updateRouteHandler }: NewPostProps) {
             <div className="space-x-3">
               <Button
                 color="primary"
+                disabled={isSubmitting}
+                isLoading={isSubmitting}
                 startContent={<Save className="size-5" />}
                 type="submit"
               >

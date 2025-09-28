@@ -18,6 +18,12 @@ export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Change document title
+  useEffect(() => {
+    document.title = "Home - Mini Blog";
+  }, []);
+
+  // fetch post from API
   useEffect(() => {
     const fetchPosts = async () => {
       setIsLoading(true);
@@ -36,6 +42,7 @@ export default function Home() {
     fetchPosts();
   }, []);
 
+  // Function to get excerpt of title and body
   const getExcerpt = (content: string, type: string, length: number) => {
     let newContent = "";
 
