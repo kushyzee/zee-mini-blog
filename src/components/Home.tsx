@@ -3,7 +3,6 @@ import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
 import { Divider } from "@heroui/divider";
 import { Spinner } from "@heroui/react";
 import { Calendar, Edit, Eye, Trash2 } from "lucide-react";
-import { useEffect, useState } from "react";
 
 interface Post {
   id: number;
@@ -12,36 +11,12 @@ interface Post {
   userId: number;
 }
 
-const baseUrl = "https://jsonplaceholder.typicode.com/posts";
+interface HomeProps {
+  isLoading: boolean;
+  posts: Post[];
+}
 
-export default function Home() {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  // Change document title
-  useEffect(() => {
-    document.title = "Home - Mini Blog";
-  }, []);
-
-  // fetch post from API
-  useEffect(() => {
-    const fetchPosts = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(`${baseUrl}?_limit=6`);
-        const data = await response.json();
-
-        setPosts(data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchPosts();
-  }, []);
-
+export default function Home({ isLoading, posts }: HomeProps) {
   // Function to get excerpt of title and body
   const getExcerpt = (content: string, type: string, length: number) => {
     let newContent = "";

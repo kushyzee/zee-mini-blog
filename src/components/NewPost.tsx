@@ -2,18 +2,21 @@ import { Button, Card, CardBody, Form, Input, Textarea } from "@heroui/react";
 import { Save, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import { Post } from "../types/myTypes";
+
 import BackButton from "./BackButton";
 
 interface NewPostProps {
   updateRouteHandler: (newRoute: string) => void;
+  posts: Post[];
+  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
 }
 
-interface Post {
-  title: string;
-  content: string;
-}
-
-export default function NewPost({ updateRouteHandler }: NewPostProps) {
+export default function NewPost({
+  updateRouteHandler,
+  posts,
+  setPosts,
+}: NewPostProps) {
   const [post, setPost] = useState<Post | {}>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
@@ -76,7 +79,8 @@ export default function NewPost({ updateRouteHandler }: NewPostProps) {
       if (response.ok) {
         const data = await response.json();
 
-        console.log(data);
+        setPosts([data, ...posts]);
+        updateRouteHandler("home");
       } else {
         console.log("response not ok");
       }

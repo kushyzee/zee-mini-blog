@@ -1,11 +1,22 @@
 import { BookOpen, Plus } from "lucide-react";
 import { Button } from "@heroui/react";
 
+interface HeaderProps {
+  updateRouteHandler: (newRoute: string) => void;
+  showNewPostButton: boolean;
+  setShowNewPostButton: (show: boolean) => void;
+}
+
 export default function Header({
   updateRouteHandler,
-}: {
-  updateRouteHandler: (newRoute: string) => void;
-}) {
+  showNewPostButton,
+  setShowNewPostButton,
+}: HeaderProps) {
+  const handleButtonPress = () => {
+    updateRouteHandler("new-post");
+    setShowNewPostButton(false);
+  };
+
   return (
     <header className="py-5 px-4 shadow-md fixed top-0 left-0 right-0 bg-transparent backdrop-blur-xl z-30">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -17,15 +28,17 @@ export default function Header({
             Mini Blog
           </p>
         </div>
-        <Button
-          className="font-medium"
-          color="primary"
-          radius="md"
-          startContent={<Plus />}
-          onPress={() => updateRouteHandler("new-post")}
-        >
-          New Post
-        </Button>
+        {showNewPostButton && (
+          <Button
+            className="font-medium"
+            color="primary"
+            radius="md"
+            startContent={<Plus />}
+            onPress={handleButtonPress}
+          >
+            New Post
+          </Button>
+        )}
       </div>
     </header>
   );
