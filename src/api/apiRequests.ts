@@ -1,4 +1,4 @@
-import { Post } from "@/types/myTypes";
+import { Post, Routes } from "@/types/myTypes";
 
 interface PostData {
   title: string;
@@ -11,7 +11,7 @@ interface SendPostParams {
   postData: PostData;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
   posts: Post[];
-  updateRouteHandler: (newRoute: string) => void;
+  updateRouteHandler: (newRoute: Routes) => void;
   toggleNewPostButton: (show: boolean) => void;
   setIsSubmitting: React.Dispatch<React.SetStateAction<boolean>>;
 }

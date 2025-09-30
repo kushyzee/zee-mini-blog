@@ -1,8 +1,10 @@
 import { BookOpen, Plus } from "lucide-react";
 import { Button } from "@heroui/react";
 
+import { Routes } from "@/types/myTypes";
+
 interface HeaderProps {
-  updateRouteHandler: (newRoute: string) => void;
+  updateRouteHandler: (newRoute: Routes) => void;
   showNewPostButton: boolean;
   setShowNewPostButton: (show: boolean) => void;
 }

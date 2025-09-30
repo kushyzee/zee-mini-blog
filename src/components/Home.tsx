@@ -5,7 +5,12 @@ import { Spinner } from "@heroui/react";
 import { Calendar, Edit, Eye, Trash2 } from "lucide-react";
 
 import { useDocumentTitle } from "@/hooks/customHooks";
-import { formatDate, getExcerpt } from "@/utilities/functions";
+import {
+  formatDate,
+  getExcerpt,
+  handleEditButtonPress,
+} from "@/utilities/functions";
+import { Routes } from "@/types/myTypes";
 
 interface Post {
   id: number;
@@ -18,9 +23,14 @@ interface Post {
 interface HomeProps {
   isLoading: boolean;
   posts: Post[];
+  updateRouteHandler: (newRoute: Routes) => void;
 }
 
-export default function Home({ isLoading, posts }: HomeProps) {
+export default function Home({
+  isLoading,
+  posts,
+  updateRouteHandler,
+}: HomeProps) {
   useDocumentTitle("Home - Mini Blog");
 
   if (isLoading) {
@@ -75,6 +85,7 @@ export default function Home({ isLoading, posts }: HomeProps) {
                 <Button
                   className="bg-gray-100"
                   startContent={<Edit className="size-5" />}
+                  onPress={() => updateRouteHandler("new-post")}
                 >
                   Edit
                 </Button>

@@ -4,3 +4,5 @@ export interface Post {
   body: string;
   userId: number;
 }
+
+export type Routes = "home" | "new-post";

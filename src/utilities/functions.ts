@@ -1,5 +1,3 @@
-import { log } from "console";
-
 export const getExcerpt = (content: string, type: string, length: number) => {
   let newContent = "";
 
@@ -43,3 +41,5 @@ export const formatDate = (date: number) => {
 
   return formattedDate;
 };
+
+export const handleEditButtonPress = () => {};

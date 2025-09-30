@@ -1,8 +1,9 @@
+import { Routes } from "@/types/myTypes";
 import { Button } from "@heroui/button";
 import { ArrowLeft } from "lucide-react";
 
 interface BackButtonProps {
-  updateRouteHandler: (newRoute: string) => void;
+  updateRouteHandler: (newRoute: Routes) => void;
   toggleNewPostButton: (show: boolean) => void;
 }
 

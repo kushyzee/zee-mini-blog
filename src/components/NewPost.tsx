@@ -2,7 +2,7 @@ import { Button, Card, CardBody, Form, Input, Textarea } from "@heroui/react";
 import { Save, X } from "lucide-react";
 import { useState } from "react";
 
-import { Post } from "../types/myTypes";
+import { Post, Routes } from "../types/myTypes";
 
 import BackButton from "./BackButton";
 
@@ -11,7 +11,7 @@ import { useDocumentTitle } from "@/hooks/customHooks";
 import { validationHandler } from "@/utilities/functions";
 
 interface NewPostProps {
-  updateRouteHandler: (newRoute: string) => void;
+  updateRouteHandler: (newRoute: Routes) => void;
   posts: Post[];
   toggleNewPostButton: (show: boolean) => void;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
