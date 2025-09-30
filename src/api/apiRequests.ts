@@ -19,6 +19,11 @@ interface SendPostParams {
   setIsSubmitting: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+interface DeletePostParams {
+  postId: number;
+  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+}
+
 // Function to send post to API
 export const sendPost = async ({
   postData,
@@ -91,5 +96,26 @@ export const updatePost = async ({
     console.log(error);
   } finally {
     setIsSubmitting(false);
+  }
+};
+
+export const deletePost = async ({ postId, setPosts }: DeletePostParams) => {
+  try {
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/posts/${postId}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    if (response.ok) {
+      setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
+
+      console.log("Post deleted successfully");
+    } else {
+      console.log("Failed to delete the post");
+    }
+  } catch (error) {
+    console.log(error);
   }
 };

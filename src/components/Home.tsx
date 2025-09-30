@@ -11,6 +11,7 @@ import {
   handleButtonPress,
 } from "@/utilities/functions";
 import { EditPostData, Routes } from "@/types/myTypes";
+import { deletePost } from "@/api/apiRequests";
 
 interface Post {
   id: number;
@@ -23,6 +24,7 @@ interface Post {
 interface HomeProps {
   isLoading: boolean;
   posts: Post[];
+  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
   updateRouteHandler: (newRoute: Routes) => void;
   toggleNewPostButton: (show: boolean) => void;
   setEditPostData: React.Dispatch<React.SetStateAction<EditPostData>>;
@@ -31,6 +33,7 @@ interface HomeProps {
 export default function Home({
   isLoading,
   posts,
+  setPosts,
   updateRouteHandler,
   toggleNewPostButton,
   setEditPostData,
@@ -114,7 +117,12 @@ export default function Home({
                 >
                   Edit
                 </Button>
-                <Button isIconOnly className="text-red-600" variant="light">
+                <Button
+                  isIconOnly
+                  className="text-red-600"
+                  variant="light"
+                  onPress={() => deletePost({ postId: post.id, setPosts })}
+                >
                   <Trash2 className="size-5" />
                 </Button>
               </div>

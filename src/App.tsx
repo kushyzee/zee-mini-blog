@@ -40,6 +40,7 @@ function App() {
             isLoading={isLoading}
             posts={posts}
             setEditPostData={setEditPostData}
+            setPosts={setPosts}
             toggleNewPostButton={toggleNewPostButton}
             updateRouteHandler={updateRoute}
           />
