@@ -66,6 +66,8 @@ export default function Home({
     });
   };
 
+  console.log(posts);
+
   return (
     <div className="pt-32 max-w-4xl mx-auto p-4">
       {/* Hero section */}

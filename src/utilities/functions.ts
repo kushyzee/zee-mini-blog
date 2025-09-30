@@ -1,3 +1,5 @@
+import { addToast } from "@heroui/toast";
+
 import { Routes } from "@/types/myTypes";
 
 interface ButtonPressParams {
@@ -45,12 +47,8 @@ export const formatDate = (date: number) => {
     year: "numeric",
   });
 
-  console.log(formattedDate);
-
   return formattedDate;
 };
-
-export const handleEditButtonPress = () => {};
 
 // Handle edit and new post button press
 export const handleButtonPress = ({
@@ -60,4 +58,17 @@ export const handleButtonPress = ({
 }: ButtonPressParams) => {
   updateRouteHandler(route);
   toggleNewPostButton(false);
+};
+
+// show toast function
+export const showToast = (
+  title: string,
+  description: string,
+  color: "success" | "danger"
+) => {
+  addToast({
+    title,
+    description,
+    color,
+  });
 };

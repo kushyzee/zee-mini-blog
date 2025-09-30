@@ -1,4 +1,5 @@
 import { Post, Routes } from "@/types/myTypes";
+import { showToast } from "@/utilities/functions";
 
 interface PostData {
   title: string;
@@ -42,6 +43,12 @@ export const sendPost = async ({
     });
 
     if (response.ok) {
+      showToast(
+        "Post Created",
+        "Your post has been created successfully.",
+        "success"
+      );
+
       const data = await response.json();
 
       setPosts((prevPost) => [data, ...prevPost]);
@@ -53,6 +60,12 @@ export const sendPost = async ({
     }
   } catch (error) {
     console.log(error);
+
+    showToast(
+      "Error",
+      "There was an error creating your post. Please try again.",
+      "danger"
+    );
   } finally {
     setIsSubmitting(false);
   }
@@ -79,6 +92,12 @@ export const updatePost = async ({
     );
 
     if (response.ok) {
+      showToast(
+        "Post Updated",
+        "Your post has been updated successfully.",
+        "success"
+      );
+
       const data = await response.json();
 
       setPosts((prevPosts) => {
@@ -94,6 +113,11 @@ export const updatePost = async ({
     }
   } catch (error) {
     console.log(error);
+    showToast(
+      "Error",
+      "There was an error updating your post. Please try again.",
+      "danger"
+    );
   } finally {
     setIsSubmitting(false);
   }
@@ -109,13 +133,22 @@ export const deletePost = async ({ postId, setPosts }: DeletePostParams) => {
     );
 
     if (response.ok) {
-      setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
+      showToast(
+        "Post Deleted",
+        "Your post has been deleted successfully.",
+        "success"
+      );
 
-      console.log("Post deleted successfully");
+      setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
     } else {
       console.log("Failed to delete the post");
     }
   } catch (error) {
     console.log(error);
+    showToast(
+      "Error",
+      "There was an error deleting your post. Please try again.",
+      "danger"
+    );
   }
 };
