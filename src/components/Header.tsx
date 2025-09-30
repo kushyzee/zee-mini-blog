@@ -7,13 +7,13 @@ import { handleButtonPress } from "@/utilities/functions";
 interface HeaderProps {
   updateRouteHandler: (newRoute: Routes) => void;
   showNewPostButton: boolean;
-  setShowNewPostButton: (show: boolean) => void;
+  toggleNewPostButton: (show: boolean) => void;
 }
 
 export default function Header({
   updateRouteHandler,
   showNewPostButton,
-  setShowNewPostButton,
+  toggleNewPostButton,
 }: HeaderProps) {
   return (
     <header className="py-5 px-4 shadow-md fixed top-0 left-0 right-0 bg-transparent backdrop-blur-xl z-30">
@@ -35,7 +35,7 @@ export default function Header({
             onPress={() =>
               handleButtonPress({
                 updateRouteHandler,
-                setShowNewPostButton,
+                toggleNewPostButton,
                 route: "new-post",
               })
             }

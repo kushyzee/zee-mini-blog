@@ -10,7 +10,7 @@ import {
   getExcerpt,
   handleButtonPress,
 } from "@/utilities/functions";
-import { Routes } from "@/types/myTypes";
+import { EditPostData, Routes } from "@/types/myTypes";
 
 interface Post {
   id: number;
@@ -25,6 +25,7 @@ interface HomeProps {
   posts: Post[];
   updateRouteHandler: (newRoute: Routes) => void;
   toggleNewPostButton: (show: boolean) => void;
+  setEditPostData: React.Dispatch<React.SetStateAction<EditPostData>>;
 }
 
 export default function Home({
@@ -32,6 +33,7 @@ export default function Home({
   posts,
   updateRouteHandler,
   toggleNewPostButton,
+  setEditPostData,
 }: HomeProps) {
   useDocumentTitle("Home - Mini Blog");
 
@@ -42,6 +44,24 @@ export default function Home({
       </div>
     );
   }
+
+  const handleEditButtonPress = (
+    postTitle: string,
+    postBody: string,
+    postId: number
+  ) => {
+    setEditPostData({
+      postTitle,
+      postBody,
+      postId,
+    });
+
+    handleButtonPress({
+      updateRouteHandler,
+      toggleNewPostButton,
+      route: "edit-post",
+    });
+  };
 
   return (
     <div className="pt-32 max-w-4xl mx-auto p-4">
@@ -89,11 +109,7 @@ export default function Home({
                   startContent={<Edit className="size-5" />}
                   variant="light"
                   onPress={() =>
-                    handleButtonPress({
-                      updateRouteHandler,
-                      toggleNewPostButton,
-                      route: "edit-post",
-                    })
+                    handleEditButtonPress(post.title, post.body, post.id)
                   }
                 >
                   Edit

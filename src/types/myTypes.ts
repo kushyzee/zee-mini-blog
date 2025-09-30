@@ -6,3 +6,9 @@ export interface Post {
 }
 
 export type Routes = "home" | "new-post" | "edit-post";
+
+export interface EditPostData {
+  postId: number | null;
+  postTitle: string;
+  postBody: string;
+}

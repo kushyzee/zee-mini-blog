@@ -4,8 +4,8 @@ import { Save, X } from "lucide-react";
 
 import BackButton from "./BackButton";
 
-import { Post, Routes } from "@/types/myTypes";
-import { sendPost } from "@/api/apiRequests";
+import { EditPostData, Post, Routes } from "@/types/myTypes";
+import { updatePost } from "@/api/apiRequests";
 import { validationHandler } from "@/utilities/functions";
 import { useDocumentTitle } from "@/hooks/customHooks";
 
@@ -14,6 +14,7 @@ interface EditPostProps {
   posts: Post[];
   toggleNewPostButton: (show: boolean) => void;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  editPostData: EditPostData;
 }
 
 export default function EditPost({
@@ -21,8 +22,11 @@ export default function EditPost({
   updateRouteHandler,
   posts,
   setPosts,
+  editPostData,
 }: EditPostProps) {
   useDocumentTitle("Create New Post - Mini Blog");
+
+  const { postId, postBody, postTitle } = editPostData;
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
@@ -47,17 +51,17 @@ export default function EditPost({
     const postData = {
       title,
       body: content,
-      userId: 1,
       date: Date.now(),
     };
 
-    sendPost({
+    updatePost({
       postData,
       setPosts,
       posts,
       updateRouteHandler,
       toggleNewPostButton,
       setIsSubmitting,
+      postId,
     });
   };
 
@@ -76,6 +80,7 @@ export default function EditPost({
               <Input
                 isClearable
                 isRequired
+                defaultValue={postTitle}
                 label="Post Title"
                 labelPlacement="outside-top"
                 name="title"
@@ -86,6 +91,7 @@ export default function EditPost({
               <Textarea
                 isClearable
                 isRequired
+                defaultValue={postBody}
                 label="Content"
                 labelPlacement="outside-top"
                 maxRows={18}
@@ -104,7 +110,7 @@ export default function EditPost({
                 startContent={!isSubmitting && <Save className="size-5" />}
                 type="submit"
               >
-                {isSubmitting ? "Submitting..." : "Publish Post"}
+                {isSubmitting ? "Updating..." : "Update Post"}
               </Button>
               <Button
                 startContent={<X className="size-5" />}

@@ -4,11 +4,18 @@ import Header from "./components/Header";
 import Home from "./components/Home";
 import NewPost from "./components/NewPost";
 import { useFetchPosts } from "./hooks/customHooks";
-import { Routes } from "./types/myTypes";
+import { EditPostData, Routes } from "./types/myTypes";
+import EditPost from "./components/EditPost";
 
 function App() {
   const [route, setRoute] = useState<Routes>("home");
   const [showNewPostButton, setShowNewPostButton] = useState(true);
+
+  const [editPostData, setEditPostData] = useState<EditPostData>({
+    postBody: "",
+    postTitle: "",
+    postId: null,
+  });
 
   const updateRoute = (newRoute: Routes) => {
     setRoute(newRoute);
@@ -23,8 +30,8 @@ function App() {
   return (
     <div className=" min-h-screen bg-gray-100">
       <Header
-        setShowNewPostButton={setShowNewPostButton}
         showNewPostButton={showNewPostButton}
+        toggleNewPostButton={toggleNewPostButton}
         updateRouteHandler={updateRoute}
       />
       <main>
@@ -32,6 +39,7 @@ function App() {
           <Home
             isLoading={isLoading}
             posts={posts}
+            setEditPostData={setEditPostData}
             toggleNewPostButton={toggleNewPostButton}
             updateRouteHandler={updateRoute}
           />
@@ -44,7 +52,15 @@ function App() {
             updateRouteHandler={updateRoute}
           />
         )}
-        {/* Future routes can be added here */}
+        {route === "edit-post" && (
+          <EditPost
+            editPostData={editPostData}
+            posts={posts}
+            setPosts={setPosts}
+            toggleNewPostButton={toggleNewPostButton}
+            updateRouteHandler={updateRoute}
+          />
+        )}
       </main>
     </div>
   );

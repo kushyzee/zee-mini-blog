@@ -3,8 +3,12 @@ import { Post, Routes } from "@/types/myTypes";
 interface PostData {
   title: string;
   body: string;
-  userId: number;
+  userId?: number;
   date: number;
+}
+
+interface UpdatePostParams extends SendPostParams {
+  postId: number | null;
 }
 
 interface SendPostParams {
@@ -33,6 +37,44 @@ export const sendPost = async ({
       },
       body: JSON.stringify(postData),
     });
+
+    if (response.ok) {
+      const data = await response.json();
+
+      setPosts([data, ...posts]);
+
+      updateRouteHandler("home");
+      toggleNewPostButton(true);
+    } else {
+      console.log("response not ok");
+    }
+  } catch (error) {
+    console.log(error);
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
+export const updatePost = async ({
+  postData,
+  setPosts,
+  posts,
+  updateRouteHandler,
+  toggleNewPostButton,
+  setIsSubmitting,
+  postId,
+}: UpdatePostParams) => {
+  try {
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/posts/${postId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(postData),
+      }
+    );
 
     if (response.ok) {
       const data = await response.json();
