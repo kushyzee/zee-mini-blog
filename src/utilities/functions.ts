@@ -1,3 +1,11 @@
+import { Routes } from "@/types/myTypes";
+
+interface ButtonPressParams {
+  updateRouteHandler: (newRoute: Routes) => void;
+  toggleNewPostButton: (show: boolean) => void;
+  route: Routes;
+}
+
 export const getExcerpt = (content: string, type: string, length: number) => {
   let newContent = "";
 
@@ -43,3 +51,13 @@ export const formatDate = (date: number) => {
 };
 
 export const handleEditButtonPress = () => {};
+
+// Handle edit and new post button press
+export const handleButtonPress = ({
+  updateRouteHandler,
+  toggleNewPostButton,
+  route,
+}: ButtonPressParams) => {
+  updateRouteHandler(route);
+  toggleNewPostButton(false);
+};

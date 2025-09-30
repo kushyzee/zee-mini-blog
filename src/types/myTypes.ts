@@ -5,4 +5,4 @@ export interface Post {
   userId: number;
 }
 
-export type Routes = "home" | "new-post";
+export type Routes = "home" | "new-post" | "edit-post";

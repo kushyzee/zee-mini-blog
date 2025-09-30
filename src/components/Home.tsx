@@ -8,7 +8,7 @@ import { useDocumentTitle } from "@/hooks/customHooks";
 import {
   formatDate,
   getExcerpt,
-  handleEditButtonPress,
+  handleButtonPress,
 } from "@/utilities/functions";
 import { Routes } from "@/types/myTypes";
 
@@ -24,12 +24,14 @@ interface HomeProps {
   isLoading: boolean;
   posts: Post[];
   updateRouteHandler: (newRoute: Routes) => void;
+  toggleNewPostButton: (show: boolean) => void;
 }
 
 export default function Home({
   isLoading,
   posts,
   updateRouteHandler,
+  toggleNewPostButton,
 }: HomeProps) {
   useDocumentTitle("Home - Mini Blog");
 
@@ -85,7 +87,14 @@ export default function Home({
                 <Button
                   className="bg-gray-100"
                   startContent={<Edit className="size-5" />}
-                  onPress={() => updateRouteHandler("new-post")}
+                  variant="light"
+                  onPress={() =>
+                    handleButtonPress({
+                      updateRouteHandler,
+                      toggleNewPostButton,
+                      route: "edit-post",
+                    })
+                  }
                 >
                   Edit
                 </Button>

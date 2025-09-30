@@ -32,6 +32,7 @@ function App() {
           <Home
             isLoading={isLoading}
             posts={posts}
+            toggleNewPostButton={toggleNewPostButton}
             updateRouteHandler={updateRoute}
           />
         )}

@@ -1,6 +1,7 @@
-import { Routes } from "@/types/myTypes";
 import { Button } from "@heroui/button";
 import { ArrowLeft } from "lucide-react";
+
+import { Routes } from "@/types/myTypes";
 
 interface BackButtonProps {
   updateRouteHandler: (newRoute: Routes) => void;
