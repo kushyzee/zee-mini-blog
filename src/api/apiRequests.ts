@@ -14,7 +14,6 @@ interface UpdatePostParams extends SendPostParams {
 interface SendPostParams {
   postData: PostData;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
-  posts: Post[];
   updateRouteHandler: (newRoute: Routes) => void;
   toggleNewPostButton: (show: boolean) => void;
   setIsSubmitting: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,7 +23,6 @@ interface SendPostParams {
 export const sendPost = async ({
   postData,
   setPosts,
-  posts,
   updateRouteHandler,
   toggleNewPostButton,
   setIsSubmitting,
@@ -41,7 +39,7 @@ export const sendPost = async ({
     if (response.ok) {
       const data = await response.json();
 
-      setPosts([data, ...posts]);
+      setPosts((prevPost) => [data, ...prevPost]);
 
       updateRouteHandler("home");
       toggleNewPostButton(true);
@@ -58,7 +56,6 @@ export const sendPost = async ({
 export const updatePost = async ({
   postData,
   setPosts,
-  posts,
   updateRouteHandler,
   toggleNewPostButton,
   setIsSubmitting,
@@ -79,7 +76,11 @@ export const updatePost = async ({
     if (response.ok) {
       const data = await response.json();
 
-      setPosts([data, ...posts]);
+      setPosts((prevPosts) => {
+        const newPosts = prevPosts.filter((post) => post.id !== postId);
+
+        return [data, ...newPosts];
+      });
 
       updateRouteHandler("home");
       toggleNewPostButton(true);

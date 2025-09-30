@@ -11,7 +11,6 @@ import { useDocumentTitle } from "@/hooks/customHooks";
 
 interface EditPostProps {
   updateRouteHandler: (newRoute: Routes) => void;
-  posts: Post[];
   toggleNewPostButton: (show: boolean) => void;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
   editPostData: EditPostData;
@@ -20,7 +19,6 @@ interface EditPostProps {
 export default function EditPost({
   toggleNewPostButton,
   updateRouteHandler,
-  posts,
   setPosts,
   editPostData,
 }: EditPostProps) {
@@ -57,7 +55,6 @@ export default function EditPost({
     updatePost({
       postData,
       setPosts,
-      posts,
       updateRouteHandler,
       toggleNewPostButton,
       setIsSubmitting,

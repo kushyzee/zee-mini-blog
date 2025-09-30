@@ -46,7 +46,6 @@ function App() {
         )}
         {route === "new-post" && (
           <NewPost
-            posts={posts}
             setPosts={setPosts}
             toggleNewPostButton={toggleNewPostButton}
             updateRouteHandler={updateRoute}
@@ -55,7 +54,6 @@ function App() {
         {route === "edit-post" && (
           <EditPost
             editPostData={editPostData}
-            posts={posts}
             setPosts={setPosts}
             toggleNewPostButton={toggleNewPostButton}
             updateRouteHandler={updateRoute}

@@ -12,14 +12,12 @@ import { validationHandler } from "@/utilities/functions";
 
 interface NewPostProps {
   updateRouteHandler: (newRoute: Routes) => void;
-  posts: Post[];
   toggleNewPostButton: (show: boolean) => void;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
 }
 
 export default function NewPost({
   updateRouteHandler,
-  posts,
   setPosts,
   toggleNewPostButton,
 }: NewPostProps) {
@@ -55,7 +53,6 @@ export default function NewPost({
     sendPost({
       postData,
       setPosts,
-      posts,
       updateRouteHandler,
       toggleNewPostButton,
       setIsSubmitting,
