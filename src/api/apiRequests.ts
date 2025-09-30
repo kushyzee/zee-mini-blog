@@ -6,10 +6,11 @@ interface PostData {
   body: string;
   userId?: number;
   date: number;
+  id?: number | undefined;
 }
 
 interface UpdatePostParams extends SendPostParams {
-  postId: number | null;
+  postId: number | undefined;
 }
 
 interface SendPostParams {
@@ -23,6 +24,7 @@ interface SendPostParams {
 interface DeletePostParams {
   postId: number;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  setIsDeleting: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // Function to send post to API
@@ -79,6 +81,7 @@ export const updatePost = async ({
   setIsSubmitting,
   postId,
 }: UpdatePostParams) => {
+  postData.id = postId;
   try {
     const response = await fetch(
       `https://jsonplaceholder.typicode.com/posts/${postId}`,
@@ -123,7 +126,13 @@ export const updatePost = async ({
   }
 };
 
-export const deletePost = async ({ postId, setPosts }: DeletePostParams) => {
+export const deletePost = async ({
+  postId,
+  setPosts,
+  setIsDeleting,
+}: DeletePostParams) => {
+  setIsDeleting(true);
+
   try {
     const response = await fetch(
       `https://jsonplaceholder.typicode.com/posts/${postId}`,
@@ -150,5 +159,7 @@ export const deletePost = async ({ postId, setPosts }: DeletePostParams) => {
       "There was an error deleting your post. Please try again.",
       "danger"
     );
+  } finally {
+    setIsDeleting(false);
   }
 };

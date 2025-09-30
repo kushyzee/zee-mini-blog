@@ -3,6 +3,7 @@ import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
 import { Divider } from "@heroui/divider";
 import { Spinner } from "@heroui/react";
 import { Calendar, Edit, Eye, Trash2 } from "lucide-react";
+import { useState } from "react";
 
 import { useDocumentTitle } from "@/hooks/customHooks";
 import {
@@ -39,6 +40,8 @@ export default function Home({
   setEditPostData,
 }: HomeProps) {
   useDocumentTitle("Home - Mini Blog");
+
+  const [isDeleting, setIsDeleting] = useState(false);
 
   if (isLoading) {
     return (
@@ -119,13 +122,18 @@ export default function Home({
                 >
                   Edit
                 </Button>
+
                 <Button
                   isIconOnly
                   className="text-red-600"
+                  disabled={isDeleting}
+                  isLoading={isDeleting}
                   variant="light"
-                  onPress={() => deletePost({ postId: post.id, setPosts })}
+                  onPress={() =>
+                    deletePost({ postId: post.id, setPosts, setIsDeleting })
+                  }
                 >
-                  <Trash2 className="size-5" />
+                  {!isDeleting && <Trash2 className="size-5" />}
                 </Button>
               </div>
             </CardFooter>
