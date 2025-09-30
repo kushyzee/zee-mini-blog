@@ -12,6 +12,7 @@ export default function Header({
   showNewPostButton,
   setShowNewPostButton,
 }: HeaderProps) {
+  // Handle button press
   const handleButtonPress = () => {
     updateRouteHandler("new-post");
     setShowNewPostButton(false);

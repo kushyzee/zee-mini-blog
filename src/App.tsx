@@ -18,6 +18,10 @@ function App() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const toggleNewPostButton = (show: boolean) => {
+    setShowNewPostButton(show);
+  };
+
   // Change document title
   useEffect(() => {
     document.title = "Home - Mini Blog";
@@ -55,6 +59,7 @@ function App() {
           <NewPost
             posts={posts}
             setPosts={setPosts}
+            toggleNewPostButton={toggleNewPostButton}
             updateRouteHandler={updateRoute}
           />
         )}

@@ -9,18 +9,25 @@ import BackButton from "./BackButton";
 interface NewPostProps {
   updateRouteHandler: (newRoute: string) => void;
   posts: Post[];
+  toggleNewPostButton: (show: boolean) => void;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+}
+
+interface PostData {
+  title: string;
+  body: string;
+  userId: number;
 }
 
 export default function NewPost({
   updateRouteHandler,
   posts,
   setPosts,
+  toggleNewPostButton,
 }: NewPostProps) {
-  const [post, setPost] = useState<Post | {}>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  // Validation handler
+  // Validation handler function
   const validationHandler = (
     value: string,
     type: "Title" | "Content",
@@ -36,7 +43,7 @@ export default function NewPost({
     return null;
   };
 
-  // Form submit handler
+  // Form submit handler function
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -54,16 +61,17 @@ export default function NewPost({
       return;
     }
 
-    setPost({
+    const postData = {
       title,
-      content,
-    });
+      body: content,
+      userId: 1,
+    };
 
-    sendPost();
+    sendPost(postData);
   };
 
   // Send post to API
-  const sendPost = async () => {
+  const sendPost = async (postData: PostData) => {
     try {
       const response = await fetch(
         "https://jsonplaceholder.typicode.com/posts",
@@ -72,7 +80,7 @@ export default function NewPost({
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(post),
+          body: JSON.stringify(postData),
         }
       );
 
@@ -80,7 +88,9 @@ export default function NewPost({
         const data = await response.json();
 
         setPosts([data, ...posts]);
+
         updateRouteHandler("home");
+        toggleNewPostButton(true);
       } else {
         console.log("response not ok");
       }
@@ -88,7 +98,6 @@ export default function NewPost({
       console.log(error);
     } finally {
       setIsSubmitting(false);
-      updateRouteHandler("home");
     }
   };
 
@@ -98,7 +107,10 @@ export default function NewPost({
 
   return (
     <div className="pt-32 max-w-4xl mx-auto p-4">
-      <BackButton updateRouteHandler={updateRouteHandler} />
+      <BackButton
+        toggleNewPostButton={toggleNewPostButton}
+        updateRouteHandler={updateRouteHandler}
+      />
       <h1 className="text-3xl font-bold my-4 text-gray-800">Create New Post</h1>
       <p>Share your thoughts, ideas, and stories with the community.</p>
       <Card className="mt-8 p-4">

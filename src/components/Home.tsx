@@ -17,6 +17,8 @@ interface HomeProps {
 }
 
 export default function Home({ isLoading, posts }: HomeProps) {
+  console.log(posts);
+
   // Function to get excerpt of title and body
   const getExcerpt = (content: string, type: string, length: number) => {
     let newContent = "";
