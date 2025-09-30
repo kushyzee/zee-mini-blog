@@ -1,10 +1,14 @@
 import { Button, Card, CardBody, Form, Input, Textarea } from "@heroui/react";
 import { Save, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Post } from "../types/myTypes";
 
 import BackButton from "./BackButton";
+
+import { sendPost } from "@/api/apiRequests";
+import { useDocumentTitle } from "@/hooks/customHooks";
+import { validationHandler } from "@/utilities/functions";
 
 interface NewPostProps {
   updateRouteHandler: (newRoute: string) => void;
@@ -13,35 +17,15 @@ interface NewPostProps {
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
 }
 
-interface PostData {
-  title: string;
-  body: string;
-  userId: number;
-}
-
 export default function NewPost({
   updateRouteHandler,
   posts,
   setPosts,
   toggleNewPostButton,
 }: NewPostProps) {
+  useDocumentTitle("Create New Post - Mini Blog");
+
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-
-  // Validation handler function
-  const validationHandler = (
-    value: string,
-    type: "Title" | "Content",
-    length: number
-  ) => {
-    if (!value.trim()) {
-      return `${type} is required`;
-    }
-    if (value.trim().length < length) {
-      return `${type} must be at least ${length} characters long`;
-    }
-
-    return null;
-  };
 
   // Form submit handler function
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
@@ -67,43 +51,15 @@ export default function NewPost({
       userId: 1,
     };
 
-    sendPost(postData);
+    sendPost({
+      postData,
+      setPosts,
+      posts,
+      updateRouteHandler,
+      toggleNewPostButton,
+      setIsSubmitting,
+    });
   };
-
-  // Send post to API
-  const sendPost = async (postData: PostData) => {
-    try {
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/posts",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(postData),
-        }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-
-        setPosts([data, ...posts]);
-
-        updateRouteHandler("home");
-        toggleNewPostButton(true);
-      } else {
-        console.log("response not ok");
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  useEffect(() => {
-    document.title = "Create New Post - Mini Blog";
-  }, []);
 
   return (
     <div className="pt-32 max-w-4xl mx-auto p-4">

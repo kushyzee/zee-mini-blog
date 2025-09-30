@@ -4,6 +4,9 @@ import { Divider } from "@heroui/divider";
 import { Spinner } from "@heroui/react";
 import { Calendar, Edit, Eye, Trash2 } from "lucide-react";
 
+import { useDocumentTitle } from "@/hooks/customHooks";
+import { getExcerpt } from "@/utilities/functions";
+
 interface Post {
   id: number;
   title: string;
@@ -17,24 +20,7 @@ interface HomeProps {
 }
 
 export default function Home({ isLoading, posts }: HomeProps) {
-  console.log(posts);
-
-  // Function to get excerpt of title and body
-  const getExcerpt = (content: string, type: string, length: number) => {
-    let newContent = "";
-
-    if (content.length > length) {
-      newContent = content.slice(0, length);
-
-      if (type === "body") {
-        return newContent + "...";
-      } else if (type === "title") {
-        return newContent;
-      }
-    }
-
-    return content;
-  };
+  useDocumentTitle("Home - Mini Blog");
 
   if (isLoading) {
     return (

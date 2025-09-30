@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import Header from "./components/Header";
 import Home from "./components/Home";
 import NewPost from "./components/NewPost";
-import { Post } from "./types/myTypes";
+import { useFetchPosts } from "./hooks/customHooks";
 
 function App() {
-  const baseUrl = "https://jsonplaceholder.typicode.com/posts";
-
   const [route, setRoute] = useState("home");
   const [showNewPostButton, setShowNewPostButton] = useState(true);
 
@@ -15,36 +13,11 @@ function App() {
     setRoute(newRoute);
   };
 
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-
   const toggleNewPostButton = (show: boolean) => {
     setShowNewPostButton(show);
   };
 
-  // Change document title
-  useEffect(() => {
-    document.title = "Home - Mini Blog";
-  }, []);
-
-  // fetch post from API
-  useEffect(() => {
-    const fetchPosts = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(`${baseUrl}?_limit=6`);
-        const data = await response.json();
-
-        setPosts(data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchPosts();
-  }, []);
+  const { posts, isLoading, setPosts } = useFetchPosts();
 
   return (
     <div className=" min-h-screen bg-gray-100">
