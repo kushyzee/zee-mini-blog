@@ -49,6 +49,7 @@ export default function NewPost({
       title,
       body: content,
       userId: 1,
+      date: Date.now(),
     };
 
     sendPost({
@@ -101,12 +102,19 @@ export default function NewPost({
                 color="primary"
                 disabled={isSubmitting}
                 isLoading={isSubmitting}
-                startContent={<Save className="size-5" />}
+                startContent={!isSubmitting && <Save className="size-5" />}
                 type="submit"
               >
-                Publish Post
+                {isSubmitting ? "Submitting..." : "Publish Post"}
               </Button>
-              <Button startContent={<X className="size-5" />} variant="flat">
+              <Button
+                startContent={<X className="size-5" />}
+                variant="flat"
+                onPress={() => {
+                  updateRouteHandler("home");
+                  toggleNewPostButton(true);
+                }}
+              >
                 Cancel
               </Button>
             </div>

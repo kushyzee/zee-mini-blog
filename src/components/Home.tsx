@@ -5,13 +5,14 @@ import { Spinner } from "@heroui/react";
 import { Calendar, Edit, Eye, Trash2 } from "lucide-react";
 
 import { useDocumentTitle } from "@/hooks/customHooks";
-import { getExcerpt } from "@/utilities/functions";
+import { formatDate, getExcerpt } from "@/utilities/functions";
 
 interface Post {
   id: number;
   title: string;
   body: string;
   userId: number;
+  date?: number;
 }
 
 interface HomeProps {
@@ -54,7 +55,7 @@ export default function Home({ isLoading, posts }: HomeProps) {
                 </h1>
                 <div className="flex gap-1 items-center text-sm">
                   <Calendar className="size-4" />
-                  <p>Jan 15, 2024</p>
+                  <p>{post.date ? formatDate(post.date) : "Jan 15, 2024"}</p>
                 </div>
               </div>
             </CardHeader>

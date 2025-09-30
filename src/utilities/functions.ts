@@ -1,3 +1,5 @@
+import { log } from "console";
+
 export const getExcerpt = (content: string, type: string, length: number) => {
   let newContent = "";
 
@@ -28,4 +30,16 @@ export const validationHandler = (
   }
 
   return null;
+};
+
+export const formatDate = (date: number) => {
+  const formattedDate = new Date(date).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  console.log(formattedDate);
+
+  return formattedDate;
 };
