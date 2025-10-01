@@ -23,6 +23,10 @@ export default {
               DEFAULT: "#2563eb",
               foreground: "#ffffff",
             },
+            success: {
+              DEFAULT: "#16a34a",
+              foreground: "#ffffff",
+            },
           },
         },
       },

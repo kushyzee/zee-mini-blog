@@ -70,5 +70,6 @@ export const showToast = (
     title,
     description,
     color,
+    variant: "solid",
   });
 };

@@ -14,7 +14,7 @@ function App() {
   const [editPostData, setEditPostData] = useState<EditPostData>({
     postBody: "",
     postTitle: "",
-    postId: null,
+    postId: undefined,
   });
 
   const updateRoute = (newRoute: Routes) => {
@@ -37,6 +37,7 @@ function App() {
       <main>
         {route === "home" && (
           <Home
+            editPostData={editPostData}
             isLoading={isLoading}
             posts={posts}
             setEditPostData={setEditPostData}

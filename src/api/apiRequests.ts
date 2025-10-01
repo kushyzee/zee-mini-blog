@@ -22,7 +22,7 @@ interface SendPostParams {
 }
 
 interface DeletePostParams {
-  postId: number;
+  postId: number | undefined;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
   setIsDeleting: React.Dispatch<React.SetStateAction<boolean>>;
 }
