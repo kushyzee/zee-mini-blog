@@ -25,6 +25,7 @@ interface DeletePostParams {
   postId: number | undefined;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
   setIsDeleting: React.Dispatch<React.SetStateAction<boolean>>;
+  onClose: () => void;
 }
 
 // Function to send post to API
@@ -130,6 +131,7 @@ export const deletePost = async ({
   postId,
   setPosts,
   setIsDeleting,
+  onClose,
 }: DeletePostParams) => {
   setIsDeleting(true);
 
@@ -161,5 +163,6 @@ export const deletePost = async ({
     );
   } finally {
     setIsDeleting(false);
+    onClose();
   }
 };

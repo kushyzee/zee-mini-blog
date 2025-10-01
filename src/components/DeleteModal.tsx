@@ -17,6 +17,7 @@ interface DeleteModalProps {
   onClose: () => void;
   postId: number | undefined;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  isDeleting: boolean;
   setIsDeleting: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -26,6 +27,7 @@ export default function DeleteModal({
   postId,
   setPosts,
   setIsDeleting,
+  isDeleting,
 }: DeleteModalProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -47,13 +49,25 @@ export default function DeleteModal({
             <ModalFooter>
               <Button
                 color="success"
+                disabled={isDeleting}
+                isLoading={isDeleting}
                 onPress={() =>
-                  deletePost({ postId: postId, setPosts, setIsDeleting })
+                  deletePost({
+                    postId: postId,
+                    setPosts,
+                    setIsDeleting,
+                    onClose,
+                  })
                 }
               >
-                Delete Post
+                {isDeleting ? "Deleting..." : "Delete Post"}
               </Button>
-              <Button color="danger" variant="flat" onPress={onClose}>
+              <Button
+                color="danger"
+                disabled={isDeleting}
+                variant="flat"
+                onPress={onClose}
+              >
                 Cancel
               </Button>
             </ModalFooter>

@@ -77,6 +77,7 @@ export default function Home({
   return (
     <div className="pt-32 max-w-4xl mx-auto p-4">
       <DeleteModal
+        isDeleting={isDeleting}
         isOpen={isOpen}
         postId={editPostData.postId}
         setIsDeleting={setIsDeleting}
