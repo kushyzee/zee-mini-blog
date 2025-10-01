@@ -16,6 +16,7 @@ interface DeleteModalProps {
   onOpen: () => void;
   onClose: () => void;
   postId: number | undefined;
+  postTitle: string;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
   isDeleting: boolean;
   setIsDeleting: React.Dispatch<React.SetStateAction<boolean>>;
@@ -25,6 +26,7 @@ export default function DeleteModal({
   isOpen,
   onClose,
   postId,
+  postTitle,
   setPosts,
   setIsDeleting,
   isDeleting,
@@ -42,8 +44,8 @@ export default function DeleteModal({
             </ModalHeader>
             <ModalBody>
               <p>
-                Are you sure you want to delete this post? This action cannot be
-                undone
+                Are you sure you want to delete &quot;
+                <strong>{postTitle}</strong>&quot;? This action cannot be undone
               </p>
             </ModalBody>
             <ModalFooter>

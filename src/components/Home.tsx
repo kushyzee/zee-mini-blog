@@ -1,18 +1,11 @@
-import { Button } from "@heroui/button";
-import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
-import { Divider } from "@heroui/divider";
+import { Card, CardBody, CardHeader } from "@heroui/card";
 import { Spinner, useDisclosure } from "@heroui/react";
-import { Calendar, Edit, Eye, Trash2 } from "lucide-react";
 import { useState } from "react";
 
 import DeleteModal from "./DeleteModal";
+import Posts from "./Posts";
 
 import { useDocumentTitle } from "@/hooks/customHooks";
-import {
-  formatDate,
-  getExcerpt,
-  handleButtonPress,
-} from "@/utilities/functions";
 import { EditPostData, Routes } from "@/types/myTypes";
 
 interface Post {
@@ -56,30 +49,13 @@ export default function Home({
     );
   }
 
-  const handleEditButtonPress = (
-    postTitle: string,
-    postBody: string,
-    postId: number
-  ) => {
-    setEditPostData({
-      postTitle,
-      postBody,
-      postId,
-    });
-
-    handleButtonPress({
-      updateRouteHandler,
-      toggleNewPostButton,
-      route: "edit-post",
-    });
-  };
-
   return (
     <div className="pt-32 max-w-4xl mx-auto p-4">
       <DeleteModal
         isDeleting={isDeleting}
         isOpen={isOpen}
         postId={editPostData.postId}
+        postTitle={editPostData.postTitle}
         setIsDeleting={setIsDeleting}
         setPosts={setPosts}
         onClose={onClose}
@@ -97,66 +73,29 @@ export default function Home({
       </div>
 
       {/* Posts section */}
-      <section className="mt-8 flex flex-col gap-4">
-        {posts.map((post) => (
-          <Card key={post.id} className="text-gray-600 p-4">
-            <CardHeader>
-              <div>
-                <h1 className="text-xl text-gray-800 mb-2 font-semibold">
-                  {getExcerpt(post.title, "title", 40)}
-                </h1>
-                <div className="flex gap-1 items-center text-sm">
-                  <Calendar className="size-4" />
-                  <p>{post.date ? formatDate(post.date) : "Jan 15, 2024"}</p>
-                </div>
-              </div>
-            </CardHeader>
-            <CardBody>
-              <p>{getExcerpt(post.body, "body", 100)}</p>
-            </CardBody>
-            <Divider />
-            <CardFooter className="flex items-center justify-between">
-              <Button
-                className="text-primary flex items-center gap-1.5 p-0"
-                startContent={<Eye className="size-5" />}
-                variant="light"
-              >
-                <p>Read More</p>
-              </Button>
-              <div className="flex gap-1">
-                <Button
-                  className="bg-gray-100"
-                  startContent={<Edit className="size-5" />}
-                  variant="light"
-                  onPress={() =>
-                    handleEditButtonPress(post.title, post.body, post.id)
-                  }
-                >
-                  Edit
-                </Button>
-
-                <Button
-                  isIconOnly
-                  className="text-danger"
-                  disabled={isDeleting}
-                  isLoading={isDeleting}
-                  variant="light"
-                  onPress={() => {
-                    onOpen();
-                    setEditPostData({
-                      postTitle: post.title,
-                      postBody: post.body,
-                      postId: post.id,
-                    });
-                  }}
-                >
-                  {!isDeleting && <Trash2 className="size-5" />}
-                </Button>
-              </div>
-            </CardFooter>
-          </Card>
-        ))}
-      </section>
+      {posts.length === 0 ? (
+        <Card className="mt-16 text-center p-4">
+          <CardHeader>
+            <h2 className="text-xl font-bold text-gray-800 text-center">
+              No posts available
+            </h2>
+          </CardHeader>
+          <CardBody>
+            <p className="text-lg">
+              Add a new post by clicking the &quot;New Post&quot; button above.
+            </p>
+          </CardBody>
+        </Card>
+      ) : (
+        <Posts
+          isDeleting={isDeleting}
+          posts={posts}
+          setEditPostData={setEditPostData}
+          toggleNewPostButton={toggleNewPostButton}
+          updateRouteHandler={updateRouteHandler}
+          onOpen={onOpen}
+        />
+      )}
     </div>
   );
 }

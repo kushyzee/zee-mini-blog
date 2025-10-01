@@ -3,6 +3,8 @@ export interface Post {
   title: string;
   body: string;
   userId: number;
+
+  date?: number;
 }
 
 export type Routes = "home" | "new-post" | "edit-post";

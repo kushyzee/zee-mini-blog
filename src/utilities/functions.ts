@@ -9,6 +9,8 @@ interface ButtonPressParams {
 }
 
 export const getExcerpt = (content: string, type: string, length: number) => {
+  content = content.slice(0, 1).toUpperCase() + content.slice(1);
+
   let newContent = "";
 
   if (content.length > length) {
