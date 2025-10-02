@@ -21,7 +21,7 @@ npm start
 ## Technologies Used
 
 - React.js
-- CSS Modules
+- TailwindCSS
 
 ## Project Structure
 
