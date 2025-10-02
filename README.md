@@ -1,50 +1,42 @@
-# Vite & HeroUI Template
+# Zee Mini Blog
 
-This is a template for creating applications using Vite and HeroUI (v2).
+A simple and lightweight blog application built with React.
 
-[Try it on CodeSandbox](https://githubbox.com/heroui-inc/vite-template)
+## Features
+
+- Create, read, update and delete blog posts
+- Responsive design
+- Clean and modern UI
+- Fast performance
+
+## Installation
+
+```bash
+git clone https://github.com/kushyzee/zee-mini-blog.git
+cd zee-mini-blog
+npm install
+npm start
+```
 
 ## Technologies Used
 
-- [Vite](https://vitejs.dev/guide/)
-- [HeroUI](https://heroui.com)
-- [Tailwind CSS](https://tailwindcss.com)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org)
-- [Framer Motion](https://www.framer.com/motion)
+- React.js
+- CSS Modules
 
-## How to Use
+## Project Structure
 
-To clone the project, run the following command:
-
-```bash
-git clone https://github.com/heroui-inc/vite-template.git
+```txt
+src/
+  ├── components/
+  ├── pages/
+  ├── styles/
+  └── utils/
 ```
 
-### Install dependencies
+## Contributing
 
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
-
-```bash
-npm install
-```
-
-### Run the development server
-
-```bash
-npm run dev
-```
-
-### Setup pnpm (optional)
-
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
-
-```bash
-public-hoist-pattern[]=*@heroui/*
-```
-
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
 
-Licensed under the [MIT license](https://github.com/heroui-inc/vite-template/blob/main/LICENSE).
+[MIT](https://choosealicense.com/licenses/mit/)
